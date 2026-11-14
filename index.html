@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>VoltSafe – Scan it. Store it. Drop it safely.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Figtree:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#eef2ef;--surf:#fff;--ink:#14211c;--mute:#566660;--line:#cfd9d3;--g:#1b9a57;--a:#e09b00;--r:#df3326;--acc:#0f5c45;--accT:#fff;--hero:#dfe8e2;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#0f1a16;--surf:#18261f;--ink:#e8f1ec;--mute:#9bb0a5;--line:#2b3d34;--g:#3ccf84;--a:#f5b930;--r:#ff5a4a;--acc:#4fd9a0;--accT:#0b1612;--hero:#142520}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#0f1a16;--surf:#18261f;--ink:#e8f1ec;--mute:#9bb0a5;--line:#2b3d34;--g:#3ccf84;--a:#f5b930;--r:#ff5a4a;--acc:#4fd9a0;--accT:#0b1612;--hero:#142520}
+html{scroll-padding-top:calc(60px + env(safe-area-inset-top,0px));scroll-behavior:smooth}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.55 Figtree,system-ui,sans-serif}
+h1,h2,h3{font-family:'Bricolage Grotesque',Figtree,sans-serif;line-height:1.05;margin:0;letter-spacing:-.02em}
+h1{font-size:clamp(2.5rem,7vw,5rem);font-weight:800}h2{font-size:clamp(1.9rem,4.5vw,3rem);font-weight:800}h3{font-size:1.25rem;font-weight:500}
+p{margin:0}a{color:inherit}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+section{padding:72px 0}
+.lead{color:var(--mute);max-width:56ch;margin-top:14px}
+nav{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0px)}
+nav .wrap{display:flex;align-items:center;gap:18px;height:58px}
+nav b{font:800 1.2rem 'Bricolage Grotesque';margin-right:auto}
+nav a{text-decoration:none;font-weight:500;font-size:.95rem;color:var(--mute)}nav a:hover{color:var(--ink)}
+@media(max-width:700px){nav a.h{display:none}}
+button{font:inherit;cursor:pointer}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.btn{background:var(--acc);color:var(--accT);border:0;border-radius:10px;padding:12px 20px;font-weight:700;text-decoration:none;display:inline-block}
+.btn.o{background:transparent;color:var(--ink);border:2px solid var(--line)}
+.lang{border:2px solid var(--line);background:transparent;color:var(--ink);border-radius:8px;padding:4px 10px;font-weight:700}
+/* hero */
+.hero{background:var(--hero);padding:56px 0 72px;overflow:hidden}
+.hero .wrap{display:grid;grid-template-columns:1.2fr .8fr;gap:40px;align-items:center}
+@media(max-width:800px){.hero .wrap{grid-template-columns:1fr}}
+.hero p.lead{font-size:1.15rem}.cta{display:flex;gap:12px;margin-top:28px;flex-wrap:wrap}
+.cell{position:relative;width:200px;height:330px;margin:0 auto;border:8px solid var(--ink);border-radius:30px;padding:10px;transition:transform .3s}
+.cell:before{content:"";position:absolute;left:50%;top:-24px;width:56px;height:16px;margin-left:-28px;background:var(--ink);border-radius:6px 6px 0 0}
+.cell .fill{position:absolute;left:10px;right:10px;bottom:10px;border-radius:16px;background:var(--c,var(--g));height:var(--h,82%);transition:height 1.2s cubic-bezier(.6,0,.2,1),background .6s}
+.cell.red{animation:shake .5s infinite}
+.cell .lab{position:absolute;inset:0;display:grid;place-items:center;text-align:center;font:800 1.7rem 'Bricolage Grotesque';color:var(--ink);mix-blend-mode:normal;text-shadow:0 0 12px var(--bg)}
+.cell .lab small{display:block;font:500 .85rem Figtree;color:var(--ink)}
+.heat{position:absolute;inset:-30px;border-radius:50%;background:radial-gradient(circle,var(--c,var(--g)) 0,transparent 65%);opacity:.22;z-index:-1;transition:background .6s}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-2px) rotate(-.6deg)}75%{transform:translateX(2px) rotate(.6deg)}}
+/* cards */
+.card{background:var(--surf);border:1px solid var(--line);border-radius:16px;padding:24px}
+.stage{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:32px}
+@media(max-width:800px){.stage{grid-template-columns:1fr}}
+.types{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 20px}
+.chip{border:2px solid var(--line);background:transparent;color:var(--ink);border-radius:999px;padding:6px 14px;font-weight:500}
+.chip[aria-pressed=true]{background:var(--acc);color:var(--accT);border-color:var(--acc)}
+.q{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0;border-top:1px solid var(--line)}
+.yn{display:flex;gap:6px}.yn button{min-width:52px}
+.res{border-left:10px solid var(--c);transition:border-color .3s}
+.res h3{font-size:1.7rem;font-weight:800;color:var(--c)}
+.res ol{padding-left:20px;margin:14px 0}.res li{margin:6px 0}
+.pop{animation:pop .4s}@keyframes pop{from{transform:scale(.96);opacity:0}}
+.empty{color:var(--mute);display:grid;place-items:center;text-align:center;min-height:240px}
+/* map */
+.map{position:relative;height:340px;border-radius:16px;border:1px solid var(--line);background:
+linear-gradient(var(--line) 1px,transparent 1px) 0 0/44px 44px,linear-gradient(90deg,var(--line) 1px,transparent 1px) 0 0/44px 44px,var(--surf);overflow:hidden}
+.pin{position:absolute;width:26px;height:26px;margin:-13px;border-radius:50%;background:var(--acc);border:3px solid var(--surf);display:grid;place-items:center;font-size:.7rem;color:var(--accT);font-weight:800;transition:transform .2s,opacity .3s}
+.pin.off{opacity:.15}.pin.sel{transform:scale(1.5);background:var(--r)}
+.me{position:absolute;left:40%;top:55%;width:16px;height:16px;margin:-8px;background:#2b6cff;border-radius:50%}
+.me:after{content:"";position:absolute;inset:-8px;border-radius:50%;border:2px solid #2b6cff;animation:ping 2s infinite}
+@keyframes ping{to{transform:scale(2.2);opacity:0}}
+.pt{display:flex;gap:12px;align-items:center;padding:12px;border:2px solid var(--line);border-radius:12px;margin-bottom:8px;background:var(--surf);width:100%;text-align:left;color:var(--ink)}
+.pt[aria-pressed=true]{border-color:var(--acc)}.pt small{color:var(--mute);display:block}.pt .d{margin-left:auto;font-weight:700}
+.tag{font-size:.75rem;font-weight:700;border-radius:6px;padding:2px 8px;background:var(--line)}
+.qr{display:flex;gap:18px;align-items:center;flex-wrap:wrap;margin-top:16px}
+.qr svg{width:130px;height:130px;background:#fff;padding:8px;border-radius:10px}
+/* system */
+.flow{display:flex;gap:0;margin-top:32px;flex-wrap:wrap}
+.step{flex:1 1 170px;padding:18px;background:var(--surf);border:1px solid var(--line);position:relative;animation:glow 7.5s infinite;animation-delay:calc(var(--i)*1.5s)}
+.step:first-child{border-radius:16px 0 0 16px}.step:last-child{border-radius:0 16px 16px 0}
+@keyframes glow{0%,20%,100%{background:var(--surf)}5%,15%{background:color-mix(in srgb,var(--acc) 22%,var(--surf))}}
+@media(max-width:700px){.step,.step:first-child,.step:last-child{border-radius:0}}
+.step b{display:block;font:800 1.05rem 'Bricolage Grotesque'}.step span{color:var(--mute);font-size:.9rem}
+.hw{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:20px}@media(max-width:800px){.hw{grid-template-columns:1fr}}
+.hw ul{padding-left:18px;color:var(--mute);margin:10px 0 0}.led{display:inline-block;width:12px;height:12px;border-radius:50%;background:var(--g);animation:led 3s infinite;margin-right:6px}
+@keyframes led{0%{background:var(--g)}33%{background:var(--a)}66%{background:var(--r)}}
+/* impact */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin-top:28px}
+.kpi b{display:block;font:800 2.6rem 'Bricolage Grotesque';line-height:1}.kpi span{color:var(--mute);font-size:.9rem}
+.bars{margin-top:14px}.bar{height:30px;border-radius:8px;margin:8px 0;display:flex;align-items:center;padding-left:12px;font-weight:700;color:#fff;width:0;transition:width 1.4s cubic-bezier(.2,.7,.2,1)}
+.hm{position:relative;height:230px;border-radius:12px;background:var(--hero);overflow:hidden;margin-top:12px}
+.hm i{position:absolute;border-radius:50%;background:radial-gradient(circle,var(--r),transparent 68%);opacity:.5;animation:br 4s infinite alternate}
+@keyframes br{to{transform:scale(1.25);opacity:.8}}
+footer{padding:36px 0;color:var(--mute);border-top:1px solid var(--line);font-size:.9rem}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translate(-50%,120px);background:var(--ink);color:var(--bg);padding:12px 20px;border-radius:12px;font-weight:700;transition:transform .4s;z-index:30}.toast.on{transform:translate(-50%,0)}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<nav><div class="wrap"><b>🔋 VoltSafe</b><a class="h" href="#scan">Scan</a><a class="h" href="#route">Drop-off</a><a class="h" href="#system">Hardware</a><a class="h" href="#impact">Impact</a><button class="lang" id="lang" aria-label="Switch language">தமிழ்</button></div></nav>
+
+<header class="hero"><div class="wrap">
+<div><h1>That old power bank is not household waste.</h1>
+<p class="lead">VoltSafe checks whether a lithium-ion battery is risky, tells you how to store it, sends you to a safe drop-off, and confirms it arrived.</p>
+<div class="cta"><a class="btn" href="#scan">Scan a battery</a><a class="btn o" href="#route">Find a drop-off</a></div></div>
+<div style="position:relative"><div class="heat" id="heat"></div><div class="cell" id="cell"><div class="fill" id="fill"></div><div class="lab"><div id="cl">Green<small>Safe to use</small></div></div></div></div>
+</div></header>
+
+<section id="scan"><div class="wrap">
+<h2 id="t-scan">Is your battery risky?</h2>
+<p class="lead" id="t-scan-p">Pick the battery, answer five yes/no questions. You get a risk level and exact next steps.</p>
+<div class="stage">
+<div class="card"><b id="t-type">Battery type</b>
+<div class="types" id="types"></div>
+<div id="qs"></div>
+<div class="cta" style="margin-top:16px"><button class="btn" id="go">Check risk</button><button class="btn o" id="photo" title="Demo: photo check for swelling and corrosion">Add photo check</button></div></div>
+<div id="out" class="card res empty" style="--c:var(--line)"><p id="t-wait">Your safety card appears here.</p></div>
+</div></div></section>
+
+<section id="route" style="background:var(--hero)"><div class="wrap">
+<h2>Where it goes next</h2>
+<p class="lead">Red batteries are only sent to hazardous-handling points. Sample data, shown around Chennai.</p>
+<div class="stage"><div><div class="map" id="map"><div class="me" title="You"></div></div>
+<div class="qr" id="qrbox"><p class="lead" style="margin:0">Choose a drop-off point to get your Safe Drop token.</p></div></div>
+<div id="list"></div></div></div></section>
+
+<section id="system"><div class="wrap">
+<h2>One loop, from scan to verified drop</h2>
+<p class="lead">The hardware turns “I think it’s risky” into a measured number.</p>
+<div class="flow">
+<div class="step" style="--i:0"><b>Battery Checker</b><span>Reads heat, swelling, fumes</span></div>
+<div class="step" style="--i:1"><b>App guidance</b><span>Safety card and nearest SafeBin</span></div>
+<div class="step" style="--i:2"><b>QR token</b><span>Opens the bin lock</span></div>
+<div class="step" style="--i:3"><b>SafeBin sensors</b><span>Weight, temperature, smoke</span></div>
+<div class="step" style="--i:4"><b>Dashboard</b><span>Risk before vs. after</span></div></div>
+<div class="hw">
+<div class="card"><h3><span class="led"></span>Battery Checker (ESP32)</h3><ul><li>INA219: voltage and current</li><li>MLX90614: surface temperature</li><li>VL53L0X: swelling thickness</li><li>MQ-2 gas sensor: leakage fumes</li><li>OLED and RGB LED show the risk level</li></ul></div>
+<div class="card"><h3>SafeBin Node</h3><ul><li>Sand-lined metal compartment</li><li>Temperature and smoke sensors with buzzer</li><li>HX711 load cell weighs each drop</li><li>Servo lock opens only for a valid QR or RFID token</li><li>WiFi/MQTT alerts to the dashboard</li></ul></div></div>
+</div></section>
+
+<section id="impact" style="background:var(--hero)"><div class="wrap">
+<h2>Impact you can measure</h2>
+<p class="lead">Starter numbers are sample data. Scan and drop in the demo above and watch them move.</p>
+<div class="kpis">
+<div class="card kpi"><b data-k="scans">0</b><span>Total scans</span></div>
+<div class="card kpi"><b data-k="red">0</b><span>Red alerts caught</span></div>
+<div class="card kpi"><b data-k="drops">0</b><span>Verified drop-offs</span></div>
+<div class="card kpi"><b data-k="kg">0</b><span>kg kept out of household waste</span></div></div>
+<div class="stage">
+<div class="card"><h3>Average risk score</h3><div class="bars" id="bars"></div></div>
+<div class="card"><h3>Neighbourhood battery map</h3><p class="lead" style="margin:4px 0 0">Anonymous red reports show where to place the next bin.</p><div class="hm" id="hm"></div></div></div>
+<div class="card" style="margin-top:20px"><b>Green points:</b> <span id="pts">0</span> · Reminders nudge you before an Amber battery passes its 7-day limit. Healthy unused batteries are routed to reuse or repair instead of the bin.</div>
+</div></section>
+<footer><div class="wrap">VoltSafe · Problem P13, Track 4: Batteries, Energy and Awareness. Demo uses sample data only.</div></footer>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const $=s=>document.querySelector(s);let L='en',type='Phone',lvl=null,sel=null;
+const TYPES=['Phone','Power bank','Earbuds','Toy','Laptop'];
+const Q=[['swell','Is it swollen or puffy?','பேட்டரி வீங்கியுள்ளதா?',3],['hot','Does it get hot while idle?','பயன்படுத்தாதபோது சூடாகிறதா?',3],['leak','Is it leaking or smelling odd?','கசிவு அல்லது வித்தியாசமான வாசனை உள்ளதா?',3],['drop','Was it dropped or water damaged?','கீழே விழுந்ததா அல்லது நனைந்ததா?',2],['old','Is it older than 3 years?','3 ஆண்டுகளுக்கு மேல் பழையதா?',1]];
+const LV={green:{n:['Green: low risk','பச்சை: குறைந்த ஆபத்து'],s:[['Keep using it.','தொடர்ந்து பயன்படுத்தலாம்.'],['Recycle it at end of life.','ஆயுள் முடிந்ததும் மறுசுழற்சி செய்யுங்கள்.']]},
+amber:{n:['Amber: handle with care','மஞ்சள்: கவனம் தேவை'],s:[['Keep it in a cool, dry, non-metal box.','குளிர்ந்த, உலர்ந்த, உலோகமற்ற பெட்டியில் வையுங்கள்.'],['Tape the terminals.','முனைகளில் டேப் ஒட்டுங்கள்.'],['Drop it off within 7 days.','7 நாட்களுக்குள் ஒப்படையுங்கள்.']]},
+red:{n:['Red: dangerous','சிவப்பு: ஆபத்து'],s:[['Stop charging it now.','சார்ஜ் செய்வதை நிறுத்துங்கள்.'],['Keep it away from anything flammable.','எரியக்கூடிய பொருட்களிலிருந்து தள்ளி வையுங்கள்.'],['Store it in sand or a ceramic container.','மணல் அல்லது பீங்கான் பாத்திரத்தில் வையுங்கள்.'],['Tape the terminals.','முனைகளில் டேப் ஒட்டுங்கள்.'],['Never put it in the bin.','குப்பையில் போடாதீர்கள்.']]}};
+const UI={scan:['Is your battery risky?','உங்கள் பேட்டரி ஆபத்தானதா?'],p:['Pick the battery, answer five yes/no questions. You get a risk level and exact next steps.','பேட்டரியைத் தேர்ந்தெடுத்து ஐந்து கேள்விகளுக்குப் பதிலளிக்கவும்.'],type:['Battery type','பேட்டரி வகை'],go:['Check risk','ஆபத்தைச் சரிபார்'],wait:['Your safety card appears here.','உங்கள் பாதுகாப்பு அட்டை இங்கே தோன்றும்.'],yes:['Yes','ஆம்'],no:['No','இல்லை'],find:['Find a drop-off','ஒப்படைக்கும் இடம்'],pick:['Request a pickup','பிக்அப் கோரவும்']};
+const ans={};const i=()=>L=='en'?0:1;
+function drawQ(){$('#t-scan').textContent=UI.scan[i()];$('#t-scan-p').textContent=UI.p[i()];$('#t-type').textContent=UI.type[i()];$('#go').textContent=UI.go[i()];if(!lvl)$('#t-wait').textContent=UI.wait[i()];
+$('#types').innerHTML=TYPES.map(t=>`<button class="chip" aria-pressed="${t==type}">${t}</button>`).join('');
+$('#types').onclick=e=>{if(e.target.dataset)type=e.target.textContent;drawQ()};
+$('#qs').innerHTML=Q.map(q=>`<div class="q"><span>${q[1+i()]}</span><div class="yn"><button class="chip" data-q="${q[0]}" data-v="1" aria-pressed="${ans[q[0]]===1}">${UI.yes[i()]}</button><button class="chip" data-q="${q[0]}" data-v="0" aria-pressed="${ans[q[0]]===0}">${UI.no[i()]}</button></div></div>`).join('');}
+$('#qs').onclick=e=>{const b=e.target.closest('[data-q]');if(!b)return;ans[b.dataset.q]=+b.dataset.v;drawQ()};
+$('#lang').onclick=()=>{L=L=='en'?'ta':'en';$('#lang').textContent=L=='en'?'தமிழ்':'English';document.documentElement.lang=L;drawQ();if(lvl)show()};
+$('#photo').onclick=()=>toast('Demo: photo check would flag swelling or corrosion');
+function score(){let s=0;Q.forEach(q=>{if(ans[q[0]]===1)s+=q[3]});const r=ans.swell===1||ans.leak===1||s>=5;return r?'red':s>=2?'amber':'green'}
+const D={scans:1284,red:96,drops:412,kg:187,pts:0};
+$('#go').onclick=()=>{if(Object.keys(ans).length<5){toast(L=='en'?'Answer all five questions':'ஐந்து கேள்விகளுக்கும் பதிலளிக்கவும்');return}
+lvl=score();D.scans++;if(lvl=='red')D.red++;show();kpi();setHero(lvl);drawList()};
+function show(){const o=$('#out');o.className='card res pop';o.style.setProperty('--c',`var(--${lvl=='green'?'g':lvl=='amber'?'a':'r'})`);
+o.innerHTML=`<h3>${LV[lvl].n[i()]}</h3><p style="color:var(--mute)">${type}</p><ol>${LV[lvl].s.map(s=>`<li>${s[i()]}</li>`).join('')}</ol><div class="cta"><a class="btn" href="#route">${UI.find[i()]}</a>${lvl=='red'?`<button class="btn o" onclick="toast('Pickup requested (demo)')">${UI.pick[i()]}</button>`:''}</div>`}
+/* hero */
+const HS=[['green','82%','Green','Safe to use'],['amber','42%','Amber','Handle with care'],['red','12%','Red','Do not bin it']];let hi=0;
+function setHero(k){const s=HS.find(x=>x[0]==k);const c=`var(--${k=='green'?'g':k=='amber'?'a':'r'})`;$('#cell').style.setProperty('--c',c);$('#heat').style.setProperty('--c',c);$('#cell').classList.toggle('red',k=='red');$('#fill').style.setProperty('--h',s[1]);$('#cl').innerHTML=`${s[2]}<small>${s[3]}</small>`}
+setHero('green');let hv=setInterval(()=>{hi=(hi+1)%3;setHero(HS[hi][0])},2600);$('#cell').onclick=()=>clearInterval(hv);
+/* map */
+const P=[['E-waste bin, T. Nagar','bin',.6,34,36,0],['SafeBin, Anna Nagar','safebin',2.1,22,22,1],['Retailer take-back, Adyar','retail',1.4,62,72,0],['Municipal point, Guindy','muni',2.6,48,86,0],['Hazardous centre, Perungudi','haz',3.2,76,34,1]];
+const TN={bin:'E-waste bin',safebin:'VoltSafe SafeBin',retail:'Retailer take-back',muni:'Municipal point',haz:'Hazardous handling'};
+function drawList(){const ok=p=>lvl!='red'||p[5];const ps=P.filter(ok).length;
+$('#map').innerHTML='<div class="me" title="You"></div>'+P.map((p,k)=>`<div class="pin ${ok(p)?'':'off'} ${sel===k?'sel':''}" style="left:${p[3]}%;top:${p[4]}%">${p[5]?'!':''}</div>`).join('');
+$('#list').innerHTML=(lvl=='red'?'<p class="lead" style="margin:0 0 12px"><b>Red battery:</b> showing hazardous-handling points only.</p>':'')+[...P.keys()].filter(k=>ok(P[k])).sort((a,b)=>P[a][2]-P[b][2]).map(k=>`<button class="pt" aria-pressed="${sel===k}" data-k="${k}"><div>${P[k][0]}<small>${TN[P[k][1]]}</small></div><span class="d">${P[k][2]} km</span></button>`).join('')}
+$('#list').onclick=e=>{const b=e.target.closest('[data-k]');if(!b)return;sel=+b.dataset.k;drawList();token()};
+function qr(seed){let h=seed,g='';const f=(x,y)=>{for(const[a,b]of[[0,0],[14,0],[0,14]])if(x>=a&&x<a+7&&y>=b&&y<b+7){const u=x-a,v=y-b;return u==0||v==0||u==6||v==6||(u>1&&u<5&&v>1&&v<5)}return null};
+for(let y=0;y<21;y++)for(let x=0;x<21;x++){h=(h*1103515245+12345)&0x7fffffff;let on=f(x,y);if(on===null)on=(h>>16)&1;if(on)g+=`<rect x="${x}" y="${y}" width="1" height="1"/>`}
+return`<svg viewBox="0 0 21 21" shape-rendering="crispEdges" fill="#000" role="img" aria-label="Safe Drop QR token">${g}</svg>`}
+function token(){const id='VS-'+(Math.floor(Math.random()*9000)+1000);$('#qrbox').innerHTML=`${qr(id.length*977+Date.now()%997)}<div><b>Safe Drop token ${id}</b><p class="lead" style="margin:4px 0 12px">Show this at ${P[sel][0]}. The point scans it to confirm your battery arrived.</p><button class="btn" id="vf">Simulate scan at drop-off</button></div>`;
+$('#vf').onclick=()=>{D.drops++;D.kg+=0.2;D.pts+=10;kpi();toast('Verified drop-off. +10 green points');$('#qrbox').innerHTML='<p class="lead" style="margin:0"><b>Verified.</b> Your battery reached a safe place.</p>'}}
+/* impact */
+function kpi(){document.querySelectorAll('[data-k]').forEach(e=>{const k=e.dataset.k,t=+D[k].toFixed(1),f=+e.textContent||0,s=performance.now();(function st(n){const p=Math.min(1,(n-s)/900);e.textContent=k=='kg'?(f+(t-f)*p).toFixed(1):Math.round(f+(t-f)*p);if(p<1)requestAnimationFrame(st)})(s)});$('#pts').textContent=D.pts;
+$('#bars').innerHTML=`<div class="bar" style="background:var(--r)" data-w="62">Before drop: 62</div><div class="bar" style="background:var(--g)" data-w="14">After drop: 14</div>`;
+requestAnimationFrame(()=>document.querySelectorAll('.bar').forEach(b=>b.style.width=Math.max(18,b.dataset.w)+'%'))}
+$('#hm').innerHTML=[[18,30,90],[55,55,130],[75,20,70],[35,70,60],[85,68,100]].map(a=>`<i style="left:${a[0]}%;top:${a[1]}%;width:${a[2]}px;height:${a[2]}px;margin:-${a[2]/2}px;animation-delay:${a[0]/30}s"></i>`).join('');
+let tt;function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('on'),2400)}
+drawQ();drawList();
+new IntersectionObserver((e,o)=>{if(e[0].isIntersecting){kpi();o.disconnect()}},{threshold:.2}).observe($('#impact'));
+</script>
+</body>
+</html>
